@@ -8,14 +8,14 @@ variable "compute_config" {
     asg_desired_size  = number
     security_groups   = list(string)
     subnets           = list(string)
-    tg_name             = string
-    tg_port             = number
-    tg_protocol         = string
-    vpc_id              = string
-    listener_port       = number
-    listener_protocol   = string
-    lb_name             = string
-    lb_internal         = bool
-    lb_type             = string
+    tg_name           = string
+    tg_port           = number
+    tg_protocol       = string
+    vpc_id            = string
+    listener_port     = number
+    listener_protocol = string
+    lb_name           = string
+    lb_internal       = bool
+    lb_type           = string
   })
 }

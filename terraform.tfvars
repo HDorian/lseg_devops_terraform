@@ -1,26 +1,26 @@
 aws_region = "us-east-1"
 
 compute_config = {
-  ami_id            = "ami-12345678"
-  instance_type     = "t3.micro"
-  asg_min_size      = 1
-  asg_max_size      = 5
-  asg_desired_size  = 2
+  ami_id           = "ami-12345678"
+  instance_type    = "t3.micro"
+  asg_min_size     = 1
+  asg_max_size     = 5
+  asg_desired_size = 2
 
-  security_groups   = ["allow-https"]
-  subnets           = ["subnet-123", "subnet-456"]
+  security_groups = ["allow-https"]
+  subnets         = ["subnet-123", "subnet-456"]
 
-  tg_name           = "app-tg"
-  tg_port           = 80
-  tg_protocol       = "HTTP"
-  vpc_id            = "vpc-abcdefg123456789"
+  tg_name     = "app-tg"
+  tg_port     = 80
+  tg_protocol = "HTTP"
+  vpc_id      = "vpc-abcdefg123456789"
 
   listener_port     = 443
   listener_protocol = "HTTPS"
 
-  lb_name           = "app-load-balancer"
-  lb_internal       = false
-  lb_type           = "application"
+  lb_name     = "app-load-balancer"
+  lb_internal = false
+  lb_type     = "application"
 }
 
 network_config = {
@@ -31,11 +31,11 @@ network_config = {
 }
 
 dynamodb_config = {
-  name               = "my-table"
-  billing_mode       = "PAY_PER_REQUEST"
-  hash_key           = "id"
-  attributes         = [{ name = "id", type = "S" }]
-  read_capacity      = 5
-  write_capacity     = 5
+  name           = "my-table"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "id"
+  attributes     = [{ name = "id", type = "S" }]
+  read_capacity  = 5
+  write_capacity = 5
   #kms_key_arn = "arn:aws:kms:us-west-2:123456789012:key/example-key-id"
 }

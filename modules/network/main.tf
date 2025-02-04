@@ -18,15 +18,15 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_flow_log" "main" {
-  iam_role_arn    = "arn"
-  log_destination = "log"
+  iam_role_arn    = "arn:aws:iam::123456789012:role/flow-log-role"            #placeholder
+  log_destination = "arn:aws:logs:us-east-1:123456789012:log-group/flow-logs" #placeholder
   traffic_type    = "ALL"
   vpc_id          = aws_vpc.main.id
 }
 
 # Dummy resource to attach security group and prevent Checkov errors
 resource "aws_network_interface" "dummy_sg_attachment" {
-  subnet_id       = aws_subnet.example.id # Ensure you have a valid subnet
+  subnet_id       = aws_subnet.private[0].id # Ensure you have a valid subnet
   security_groups = [aws_security_group.allow_https.id]
 
   tags = {

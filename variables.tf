@@ -13,15 +13,15 @@ variable "compute_config" {
     asg_desired_size  = number
     security_groups   = list(string)
     subnets           = list(string)
-    tg_name             = string
-    tg_port             = number
-    tg_protocol         = string
-    vpc_id              = string
-    listener_port       = number
-    listener_protocol   = string
-    lb_name             = string
-    lb_internal         = bool
-    lb_type             = string
+    tg_name           = string
+    tg_port           = number
+    tg_protocol       = string
+    vpc_id            = string
+    listener_port     = number
+    listener_protocol = string
+    lb_name           = string
+    lb_internal       = bool
+    lb_type           = string
   })
 }
 
@@ -46,13 +46,13 @@ variable "network_config" {
 variable "dynamodb_config" {
   description = "DynamoDB table configuration"
   type = object({
-    name                     = string
-    billing_mode             = string
-    hash_key                 = string
-    range_key                = optional(string)
-    attributes               = list(map(string))
-    read_capacity            = optional(number)
-    write_capacity           = optional(number)
+    name           = string
+    billing_mode   = string
+    hash_key       = string
+    range_key      = optional(string)
+    attributes     = list(map(string))
+    read_capacity  = optional(number)
+    write_capacity = optional(number)
     global_secondary_indexes = optional(list(object({
       name            = string
       hash_key        = string
@@ -61,6 +61,6 @@ variable "dynamodb_config" {
       read_capacity   = optional(number)
       write_capacity  = optional(number)
     })), [])
-    kms_key_arn        = optional(string)
+    kms_key_arn = optional(string)
   })
 }

@@ -1,3 +1,14 @@
+terraform {
+  required_version = ">= 1.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.72.1"
+    }
+  }
+}
+
 resource "aws_s3_bucket" "lb_logs" {
   bucket = "placeholder-lb-logs-bucket"
   tags = {
@@ -27,17 +38,17 @@ resource "aws_s3_bucket_lifecycle_configuration" "lb_logs" {
   bucket = aws_s3_bucket.lb_logs.id
 
   rule {
-   abort_incomplete_multipart_upload {
-     days_after_initiation = 7
-   }
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
     filter {}
-    id = "log"
+    id     = "log"
     status = "Enabled"
   }
 
 
   rule {
-    id      = "expire"
+    id     = "expire"
     status = "Enabled"
 
     filter {
@@ -57,7 +68,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "lb_logs" {
 
 resource "aws_wafregional_web_acl_association" "foo" {
   resource_arn = aws_lb.app.arn
-  web_acl_id = aws_wafregional_web_acl.foo.id
+  web_acl_id   = aws_wafregional_web_acl.foo.id
 }
 
 resource "aws_s3_bucket_replication_configuration" "lb_logs" {
@@ -88,12 +99,12 @@ resource "aws_s3_bucket_public_access_block" "bucket_policy" {
   restrict_public_buckets = true
 }
 
- resource "aws_s3_bucket_logging" "example" {
-   bucket = aws_s3_bucket.lb_logs.arn
+resource "aws_s3_bucket_logging" "example" {
+  bucket = aws_s3_bucket.lb_logs.arn
 
-   target_bucket = aws_s3_bucket.lb_logs.arn
-   target_prefix = "log/"
- }
+  target_bucket = aws_s3_bucket.lb_logs.arn
+  target_prefix = "log/"
+}
 
 resource "aws_s3_bucket_notification" "bucket_notification" {
   bucket = aws_s3_bucket.lb_logs.arn
@@ -106,7 +117,7 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
 }
 
 resource "aws_sns_topic" "bucket_notifications" {
-  name = "bucket-notifications"
+  name              = "bucket-notifications"
   kms_master_key_id = "alias/aws/sns"
 }
 
@@ -124,13 +135,13 @@ resource "aws_launch_template" "app" {
 
   metadata_options {
     http_endpoint               = "disabled"
-    http_tokens                 = "required"  # This enforces the use of IMDSv2 / Chevkov: CKV_AWS_79 FIX
-    http_put_response_hop_limit = 1           # Optional: adjust hop limit as needed
+    http_tokens                 = "required" # This enforces the use of IMDSv2 / Chevkov: CKV_AWS_79 FIX
+    http_put_response_hop_limit = 1          # Optional: adjust hop limit as needed
   }
 }
 
 resource "aws_autoscaling_group" "app" {
-  desired_capacity    = var.compute_config.asg_desired_size 
+  desired_capacity    = var.compute_config.asg_desired_size
   max_size            = var.compute_config.asg_max_size
   min_size            = var.compute_config.asg_min_size
   vpc_zone_identifier = var.compute_config.subnets
@@ -148,19 +159,19 @@ resource "aws_autoscaling_group" "app" {
 }
 
 resource "aws_lb" "app" {
-  name               = var.compute_config.lb_name
-  internal           = var.compute_config.lb_internal
-  load_balancer_type = var.compute_config.lb_type
-  security_groups    = module.network.allow_https_sg_id
-  subnets            = var.compute_config.subnets
+  name                       = var.compute_config.lb_name
+  internal                   = var.compute_config.lb_internal
+  load_balancer_type         = var.compute_config.lb_type
+  security_groups            = module.network.allow_https_sg_id
+  subnets                    = var.compute_config.subnets
   enable_deletion_protection = true
-  drop_invalid_header_fields  = true
+  drop_invalid_header_fields = true
 
- access_logs {
-   bucket  = aws_s3_bucket.lb_logs.arn
-   prefix  = "test-lb"
-   enabled = true
- }
+  access_logs {
+    bucket  = aws_s3_bucket.lb_logs.arn
+    prefix  = "test-lb"
+    enabled = true
+  }
 
 }
 
@@ -169,14 +180,14 @@ resource "aws_lb_target_group" "app" {
   port     = var.compute_config.tg_port
   protocol = var.compute_config.tg_protocol
   vpc_id   = var.compute_config.vpc_id
- 
+
   health_check {
     healthy_threshold   = 3
     unhealthy_threshold = 3
     timeout             = 5
     interval            = 30
-    path                = "/"       # Using "/" as a placeholder path
-    protocol            = "HTTPS"   # Ensures the health check uses HTTPS
+    path                = "/"     # Using "/" as a placeholder path
+    protocol            = "HTTPS" # Ensures the health check uses HTTPS
   }
 }
 
@@ -184,12 +195,12 @@ resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.app.arn
   port              = var.compute_config.listener_port
   protocol          = var.compute_config.listener_protocol
-  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"  # Enforces TLS 1.2 and above
- # certificate_arn   = var.compute_config.listener_certificate_arn  # Provide your certificate ARN
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06" # Enforces TLS 1.2 and above
+  # certificate_arn   = var.compute_config.listener_certificate_arn  # Provide your certificate ARN
 
 
   default_action {
-    type = "redirect"
+    type             = "redirect"
     target_group_arn = aws_lb_target_group.app.arn
     redirect {
       port        = "443"

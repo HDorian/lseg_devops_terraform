@@ -1,7 +1,11 @@
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-No requirements.
+The following requirements are needed by this module:
+
+- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.0)
+
+- <a name="requirement_aws"></a> [aws](#requirement\_aws) (~> 5.72.1)
 
 ## Providers
 
@@ -33,13 +37,13 @@ Type:
 
 ```hcl
 object({
-    name                     = string
-    billing_mode             = string
-    hash_key                 = string
-    range_key                = optional(string)
-    attributes               = list(map(string))
-    read_capacity            = optional(number)
-    write_capacity           = optional(number)
+    name           = string
+    billing_mode   = string
+    hash_key       = string
+    range_key      = optional(string)
+    attributes     = list(map(string))
+    read_capacity  = optional(number)
+    write_capacity = optional(number)
     global_secondary_indexes = optional(list(object({
       name            = string
       hash_key        = string
