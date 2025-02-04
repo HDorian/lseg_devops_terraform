@@ -14,6 +14,6 @@ output "private_subnet_ids" {
 }
 
 output "allow_https_sg_id" {
-  value = aws_security_group.allow_https.id
+  value       = aws_security_group.allow_https.id
   description = "The ID of the allow_https security group"
 }

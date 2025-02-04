@@ -1,5 +1,5 @@
 # Terraform 3-Tier Architecture Module
-
+!This is a work in progress, it is not finished!
 This Terraform module sets up a **highly modular, best-practices** 3-tier architecture in AWS, including:
 
 - **Compute Layer** (Auto Scaling Groups, Load Balancers)
@@ -17,6 +17,8 @@ This Terraform module sets up a **highly modular, best-practices** 3-tier archit
 ✅ **Checkov Security Compliance** – Implements security policies recommended by Checkov  
 ✅ **VPC Flow Logs & S3 Logging** – Ensures network visibility and compliance  
 ✅ **Cross-Region S3 Replication** – Secure replication for resilience  
+✅ **Attached Security Groups** – Dummy resources ensure all security groups are attached  
+✅ **Checkov Skips for Registry Modules** – Implements proper skips for registry module constraints  
 
 ---
 
@@ -67,7 +69,7 @@ dynamodb_config = {
 
 ```bash
 git clone https://github.com/HDorian/terraform-aws-3tier.git
-cd terraform-aws-3tier
+cd terraform-3tier
 
 terraform init -upgrade
 terraform apply -var-file="terraform.tfvars"
@@ -129,6 +131,8 @@ This module follows best security practices:
 ✅ **IAM Best Practices:** Ensures least privilege permissions  
 ✅ **S3 Bucket Hardening:** Enforces encryption and access control  
 ✅ **HTTPS & TLS Enforcement:** Load balancers are configured to use TLS 1.2+  
+✅ **Security Groups Attached:** Dummy resources prevent Checkov security group errors  
+✅ **Checkov Skips for Registry Modules:** Properly handles registry modules that cannot use commit hashes  
 
 ---
 
@@ -139,6 +143,8 @@ This project is licensed under the MIT License. See `LICENSE` for details.
 
 ## 🙌 Contributing
 We welcome contributions! Please follow the guidelines in `CONTRIBUTING.md`.
+
+
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

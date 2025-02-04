@@ -1,5 +1,6 @@
 module "dynamodb" {
-  source  = "terraform-aws-modules/dynamodb-table/aws?ref=e47cf5f0d2636bd5018b4a65e988295d5360cbb6"
+  # checkov:skip=CKV_TF_1 This module uses Terraform Registry, commit hash not possible
+  source  = "terraform-aws-modules/dynamodb-table/aws"
   version = "4.2.0"
 
   name                     = var.dynamodb_config.name
@@ -10,6 +11,7 @@ module "dynamodb" {
   read_capacity            = var.dynamodb_config.read_capacity
   write_capacity           = var.dynamodb_config.write_capacity
   global_secondary_indexes = var.dynamodb_config.global_secondary_indexes
+
 
   # Enable server-side encryption with the default AWS key
   server_side_encryption_enabled = true
