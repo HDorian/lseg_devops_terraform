@@ -1,5 +1,5 @@
 module "dynamodb" {
-  source  = "terraform-aws-modules/dynamodb-table/aws"
+  source  = "terraform-aws-modules/dynamodb-table/aws?ref=e47cf5f0d2636bd5018b4a65e988295d5360cbb6"
   version = "4.2.0"
 
   name                     = var.dynamodb_config.name

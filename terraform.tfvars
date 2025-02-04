@@ -7,7 +7,7 @@ compute_config = {
   asg_max_size      = 5
   asg_desired_size  = 2
 
-  security_groups   = ["sg-12345678"]   #we asume it exists
+  security_groups   = ["allow-https"]
   subnets           = ["subnet-123", "subnet-456"]
 
   tg_name           = "app-tg"
@@ -15,8 +15,8 @@ compute_config = {
   tg_protocol       = "HTTP"
   vpc_id            = "vpc-abcdefg123456789"
 
-  listener_port     = 80
-  listener_protocol = "HTTP"
+  listener_port     = 443
+  listener_protocol = "HTTPS"
 
   lb_name           = "app-load-balancer"
   lb_internal       = false
