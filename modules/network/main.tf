@@ -1,3 +1,14 @@
+terraform {
+  required_version = ">= 1.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.72.1"
+    }
+  }
+}
+
 resource "aws_vpc" "main" {
   cidr_block = var.network_config.vpc_cidr
 
@@ -63,9 +74,6 @@ resource "aws_default_security_group" "restrict_all" {
     Name = "default-security-group-restricted"
   }
 }
-
-
-#testing testing testing testing 
 
 # Dynamic Public Subnets
 resource "aws_subnet" "public" {

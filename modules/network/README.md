@@ -1,7 +1,11 @@
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-No requirements.
+The following requirements are needed by this module:
+
+- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.0)
+
+- <a name="requirement_aws"></a> [aws](#requirement\_aws) (~> 5.72.1)
 
 ## Providers
 
@@ -17,6 +21,10 @@ No modules.
 
 The following resources are used by this module:
 
+- [aws_default_security_group.restrict_all](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/default_security_group) (resource)
+- [aws_flow_log.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/flow_log) (resource)
+- [aws_network_interface.dummy_sg_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_interface) (resource)
+- [aws_security_group.allow_https](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) (resource)
 - [aws_subnet.private](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) (resource)
 - [aws_subnet.public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) (resource)
 - [aws_vpc.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) (resource)
@@ -53,6 +61,10 @@ No optional inputs.
 ## Outputs
 
 The following outputs are exported:
+
+### <a name="output_allow_https_sg_id"></a> [allow\_https\_sg\_id](#output\_allow\_https\_sg\_id)
+
+Description: The ID of the allow\_https security group
 
 ### <a name="output_private_subnet_ids"></a> [private\_subnet\_ids](#output\_private\_subnet\_ids)
 
