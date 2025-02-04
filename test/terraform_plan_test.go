@@ -12,7 +12,7 @@ func TestTerraformPlanExecution(t *testing.T) { // Rename function
     t.Log("Terraform test started...")
 
     terraformOptions := &terraform.Options{
-        TerraformDir: "../examples/complete",
+        TerraformDir: "../",
     }
 
     // Initialize and Validate Terraform

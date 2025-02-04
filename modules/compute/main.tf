@@ -12,7 +12,7 @@ resource "aws_launch_template" "app" {
 }
 
 resource "aws_autoscaling_group" "app" {
-  desired_capacity    = var.compute_config.asg_desired 
+  desired_capacity    = var.compute_config.asg_desired_size 
   max_size            = var.compute_config.asg_max_size
   min_size            = var.compute_config.asg_min_size
   vpc_zone_identifier = var.compute_config.subnets
@@ -30,24 +30,24 @@ resource "aws_autoscaling_group" "app" {
 }
 
 resource "aws_lb" "app" {
-  name               = "app-load-balancer"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [] # Add security group here
+  name               = var.compute_config.lb_name
+  internal           = var.compute_config.lb_internal
+  load_balancer_type = var.compute_config.lb_type
+  security_groups    = var.compute_config.security_groups
   subnets            = var.compute_config.subnets
 }
 
 resource "aws_lb_target_group" "app" {
-  name     = "app-tg"
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = tolist(aws_autoscaling_group.app.vpc_zone_identifier)[0]
+  name     = var.compute_config.tg_name
+  port     = var.compute_config.tg_port
+  protocol = var.compute_config.tg_protocol
+  vpc_id   = var.compute_config.vpc_id
 }
 
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.app.arn
-  port              = 80
-  protocol          = "HTTP"
+  port              = var.compute_config.listener_port
+  protocol          = var.compute_config.listener_protocol
 
   default_action {
     type             = "forward"

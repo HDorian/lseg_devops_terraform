@@ -6,10 +6,20 @@ compute_config = {
   asg_min_size      = 1
   asg_max_size      = 5
   asg_desired_size  = 2
-  security_groups   = ["sg-12345678"]
+  security_groups   = ["sg-12345678"]   #we asume it exists
   subnets           = ["subnet-123", "subnet-456"]
-}
+  tg_name           = "app-tg"
+  tg_port           = 80
+  tg_protocol       = "HTTP"
+  vpc_id            = "vpc-abcdefg123456789"
 
+  listener_port     = 80
+  listener_protocol = "HTTP"
+
+  lb_name           = "app-load-balancer"
+  lb_internal       = false
+  lb_type           = "application"
+}
 
 network_config = {
   vpc_cidr        = "10.0.0.0/16"
