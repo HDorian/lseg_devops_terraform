@@ -63,7 +63,7 @@ dynamodb_config = {
   read_capacity      = 5
   write_capacity     = 5
 }
-
+```
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
