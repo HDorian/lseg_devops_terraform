@@ -1,6 +1,6 @@
 module "dynamodb" {
   source  = "terraform-aws-modules/dynamodb-table/aws"
-  version = "3.1.0"
+  version = "4.2.0"
 
   name                     = var.dynamodb_config.name
   billing_mode             = var.dynamodb_config.billing_mode
@@ -10,4 +10,10 @@ module "dynamodb" {
   read_capacity            = var.dynamodb_config.read_capacity
   write_capacity           = var.dynamodb_config.write_capacity
   global_secondary_indexes = var.dynamodb_config.global_secondary_indexes
+
+  # Enable server-side encryption with the default AWS key
+  server_side_encryption_enabled = true
+
+  # Uncomment if you have a custom key ARN (replace with actual ARN or variable)
+  # server_side_encryption_kms_key_arn = var.kms_key_arn
 }
