@@ -151,7 +151,7 @@ resource "aws_lb" "app" {
   name               = var.compute_config.lb_name
   internal           = var.compute_config.lb_internal
   load_balancer_type = var.compute_config.lb_type
-  security_groups    = aws_security_group.allow_https.id
+  security_groups    = module.network.allow_https_sg_id
   subnets            = var.compute_config.subnets
   enable_deletion_protection = true
   drop_invalid_header_fields  = true

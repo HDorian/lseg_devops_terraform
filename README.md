@@ -9,18 +9,20 @@ This Terraform module sets up a **highly modular, best-practices** 3-tier archit
 ---
 
 ## 📌 Features
-
-- **Full modularity** – Separate modules for compute, networking, and database
-- **Security-first approach** – Uses best practices for IAM, networking, and encryption
-- **Highly configurable** – All values managed via `terraform.tfvars`
-- **Pre-commit hooks** – Enforces Terraform linting, validation, and security scans
-- **Production-ready** – Based on industry best practices
+✅ **Full modularity** – Separate modules for compute, networking, and database  
+✅ **Security-first approach** – Uses best practices for IAM, networking, and encryption  
+✅ **Highly configurable** – All values managed via `terraform.tfvars`  
+✅ **Pre-commit hooks** – Enforces Terraform linting, validation, and security scans  
+✅ **Production-ready** – Based on industry best practices  
+✅ **Checkov Security Compliance** – Implements security policies recommended by Checkov  
+✅ **VPC Flow Logs & S3 Logging** – Ensures network visibility and compliance  
+✅ **Cross-Region S3 Replication** – Secure replication for resilience  
 
 ---
 
 ## 📖 Usage
 
-### 1️⃣ **Define the Configuration in ****`terraform.tfvars`**
+### 1️⃣ **Define the Configuration in `terraform.tfvars`**
 
 ```hcl
 aws_region = "us-east-1"
@@ -34,11 +36,11 @@ compute_config = {
   security_groups   = ["sg-12345678"]
   subnets           = ["subnet-123", "subnet-456"]
   tg_name           = "app-tg"
-  tg_port           = 80
-  tg_protocol       = "HTTP"
+  tg_port           = 443
+  tg_protocol       = "HTTPS"
   vpc_id            = "vpc-abcdefg123456789"
-  listener_port     = 80
-  listener_protocol = "HTTP"
+  listener_port     = 443
+  listener_protocol = "HTTPS"
   lb_name           = "app-load-balancer"
   lb_internal       = false
   lb_type           = "application"
@@ -64,8 +66,8 @@ dynamodb_config = {
 ### 2️⃣ **Deploy the Infrastructure**
 
 ```bash
-git clone https://github.com/your-org/terraform-3tier.git
-cd terraform-3tier
+git clone https://github.com/HDorian/terraform-aws-3tier.git
+cd terraform-aws-3tier
 
 terraform init -upgrade
 terraform apply -var-file="terraform.tfvars"
@@ -81,32 +83,31 @@ terraform destroy -var-file="terraform.tfvars"
 
 ## 📜 Inputs & Outputs
 
-### 🔹 **Inputs**
+### 🔹 Inputs
+| Name | Type | Description |
+|------|------|-------------|
+| `compute_config` | object | Configuration for compute resources |
+| `network_config` | object | Configuration for networking resources |
+| `dynamodb_config` | object | Configuration for DynamoDB database |
+| `s3_logging` | object | Configuration for S3 logging and replication |
+| `security_groups` | object | Configurations for security groups |
 
-| Name              | Type   | Description                            |
-| ----------------- | ------ | -------------------------------------- |
-| `compute_config`  | object | Configuration for compute resources    |
-| `network_config`  | object | Configuration for networking resources |
-| `dynamodb_config` | object | Configuration for DynamoDB database    |
-
-### 🔹 **Outputs**
-
-| Name                  | Description                    |
-| --------------------- | ------------------------------ |
-| `compute_asg_name`    | Name of the Auto Scaling Group |
-| `compute_lb_arn`      | ARN of the Load Balancer       |
-| `network_vpc_id`      | ID of the created VPC          |
-| `dynamodb_table_name` | Name of the DynamoDB table     |
-| `dynamodb_table_arn`  | ARN of the DynamoDB table      |
+### 🔹 Outputs
+| Name | Description |
+|------|-------------|
+| `compute_asg_name` | Name of the Auto Scaling Group |
+| `compute_lb_arn` | ARN of the Load Balancer |
+| `network_vpc_id` | ID of the created VPC |
+| `dynamodb_table_name` | Name of the DynamoDB table |
+| `dynamodb_table_arn` | ARN of the DynamoDB table |
+| `s3_logging_bucket` | S3 bucket used for logging |
 
 ---
 
 ## 🛠️ Development & Contributing
 
 ### 🔹 **Pre-Commit Hooks**
-
-This repository enforces Terraform best practices via `pre-commit` hooks.
-To install:
+This repository enforces Terraform best practices via pre-commit hooks. To install:
 
 ```bash
 pre-commit install
@@ -121,16 +122,23 @@ go test -v ./test/
 
 ---
 
-## 📝 License
+## 📜 Security & Compliance
+This module follows best security practices:
+✅ **Checkov Scans:** Implements AWS security policies  
+✅ **VPC Flow Logging:** Ensures visibility into network traffic  
+✅ **IAM Best Practices:** Ensures least privilege permissions  
+✅ **S3 Bucket Hardening:** Enforces encryption and access control  
+✅ **HTTPS & TLS Enforcement:** Load balancers are configured to use TLS 1.2+  
 
-This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
+---
+
+## 📝 License
+This project is licensed under the MIT License. See `LICENSE` for details.
 
 ---
 
 ## 🙌 Contributing
-
-We welcome contributions! Please follow the guidelines in [CONTRIBUTING.md](CONTRIBUTING.md).
-
+We welcome contributions! Please follow the guidelines in `CONTRIBUTING.md`.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
