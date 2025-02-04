@@ -27,14 +27,21 @@ variable "compute_config" {
 
 
 variable "network_config" {
-  description = "Configuration for network resources"
+  description = "Network configuration including VPC, subnets, and routing"
   type = object({
-    vpc_cidr        = string
-    vpc_name        = string
-    public_subnets  = list(map(string))
-    private_subnets = list(map(string))
+    vpc_cidr = string
+    vpc_name = string
+    public_subnets = list(object({
+      cidr = string
+      az   = string
+    }))
+    private_subnets = list(object({
+      cidr = string
+      az   = string
+    }))
   })
 }
+
 
 variable "dynamodb_config" {
   description = "DynamoDB table configuration"
@@ -54,6 +61,6 @@ variable "dynamodb_config" {
       read_capacity   = optional(number)
       write_capacity  = optional(number)
     })), [])
-    kms_master_key_id        = optional(string)
+    kms_key_arn        = optional(string)
   })
 }

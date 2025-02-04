@@ -1,30 +1,26 @@
 # Terraform 3-Tier Architecture Module
 
-## Overview
-This Terraform module sets up a highly modular, best-practices 3-tier architecture in AWS, including:
+This Terraform module sets up a **highly modular, best-practices** 3-tier architecture in AWS, including:
 
-### **Compute Layer**
-- Auto Scaling Groups
-- Load Balancers
+- **Compute Layer** (Auto Scaling Groups, Load Balancers)
+- **Network Layer** (VPC, Subnets, Security Groups)
+- **Database Layer** (DynamoDB with best-practices configurations)
 
-### **Network Layer**
-- VPC
-- Subnets
-- Security Groups
-
-### **Database Layer**
-- DynamoDB with best-practices configurations
+---
 
 ## 📌 Features
+
 - **Full modularity** – Separate modules for compute, networking, and database
 - **Security-first approach** – Uses best practices for IAM, networking, and encryption
 - **Highly configurable** – All values managed via `terraform.tfvars`
 - **Pre-commit hooks** – Enforces Terraform linting, validation, and security scans
 - **Production-ready** – Based on industry best practices
 
+---
+
 ## 📖 Usage
 
-### 1️⃣ **Define the Configuration in `terraform.tfvars`**
+### 1️⃣ **Define the Configuration in ****`terraform.tfvars`**
 
 ```hcl
 aws_region = "us-east-1"
@@ -64,6 +60,78 @@ dynamodb_config = {
   write_capacity     = 5
 }
 ```
+
+### 2️⃣ **Deploy the Infrastructure**
+
+```bash
+git clone https://github.com/your-org/terraform-3tier.git
+cd terraform-3tier
+
+terraform init -upgrade
+terraform apply -var-file="terraform.tfvars"
+```
+
+### 3️⃣ **Destroy the Infrastructure**
+
+```bash
+terraform destroy -var-file="terraform.tfvars"
+```
+
+---
+
+## 📜 Inputs & Outputs
+
+### 🔹 **Inputs**
+
+| Name              | Type   | Description                            |
+| ----------------- | ------ | -------------------------------------- |
+| `compute_config`  | object | Configuration for compute resources    |
+| `network_config`  | object | Configuration for networking resources |
+| `dynamodb_config` | object | Configuration for DynamoDB database    |
+
+### 🔹 **Outputs**
+
+| Name                  | Description                    |
+| --------------------- | ------------------------------ |
+| `compute_asg_name`    | Name of the Auto Scaling Group |
+| `compute_lb_arn`      | ARN of the Load Balancer       |
+| `network_vpc_id`      | ID of the created VPC          |
+| `dynamodb_table_name` | Name of the DynamoDB table     |
+| `dynamodb_table_arn`  | ARN of the DynamoDB table      |
+
+---
+
+## 🛠️ Development & Contributing
+
+### 🔹 **Pre-Commit Hooks**
+
+This repository enforces Terraform best practices via `pre-commit` hooks.
+To install:
+
+```bash
+pre-commit install
+pre-commit run --all-files
+```
+
+### 🔹 **Running Tests with Terratest**
+
+```bash
+go test -v ./test/
+```
+
+---
+
+## 📝 License
+
+This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
+
+---
+
+## 🙌 Contributing
+
+We welcome contributions! Please follow the guidelines in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
@@ -163,22 +231,28 @@ object({
       read_capacity   = optional(number)
       write_capacity  = optional(number)
     })), [])
-    kms_master_key_id        = optional(string)
+    kms_key_arn        = optional(string)
   })
 ```
 
 ### <a name="input_network_config"></a> [network\_config](#input\_network\_config)
 
-Description: Configuration for network resources
+Description: Network configuration including VPC, subnets, and routing
 
 Type:
 
 ```hcl
 object({
-    vpc_cidr        = string
-    vpc_name        = string
-    public_subnets  = list(map(string))
-    private_subnets = list(map(string))
+    vpc_cidr = string
+    vpc_name = string
+    public_subnets = list(object({
+      cidr = string
+      az   = string
+    }))
+    private_subnets = list(object({
+      cidr = string
+      az   = string
+    }))
   })
 ```
 

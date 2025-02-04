@@ -6,8 +6,10 @@ compute_config = {
   asg_min_size      = 1
   asg_max_size      = 5
   asg_desired_size  = 2
+
   security_groups   = ["sg-12345678"]   #we asume it exists
   subnets           = ["subnet-123", "subnet-456"]
+
   tg_name           = "app-tg"
   tg_port           = 80
   tg_protocol       = "HTTP"
