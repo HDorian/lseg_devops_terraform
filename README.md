@@ -1,29 +1,32 @@
-Terraform 3-Tier Architecture Module
+# Terraform 3-Tier Architecture Module
 
+## Overview
 This Terraform module sets up a highly modular, best-practices 3-tier architecture in AWS, including:
 
-Compute Layer (Auto Scaling Groups, Load Balancers)
+### **Compute Layer**
+- Auto Scaling Groups
+- Load Balancers
 
-Network Layer (VPC, Subnets, Security Groups)
+### **Network Layer**
+- VPC
+- Subnets
+- Security Groups
 
-Database Layer (DynamoDB with best-practices configurations)
+### **Database Layer**
+- DynamoDB with best-practices configurations
 
-📌 Features
+## 📌 Features
+- **Full modularity** – Separate modules for compute, networking, and database
+- **Security-first approach** – Uses best practices for IAM, networking, and encryption
+- **Highly configurable** – All values managed via `terraform.tfvars`
+- **Pre-commit hooks** – Enforces Terraform linting, validation, and security scans
+- **Production-ready** – Based on industry best practices
 
-Full modularity – Separate modules for compute, networking, and database
+## 📖 Usage
 
-Security-first approach – Uses best practices for IAM, networking, and encryption
+### 1️⃣ **Define the Configuration in `terraform.tfvars`**
 
-Highly configurable – All values managed via terraform.tfvars
-
-Pre-commit hooks – Enforces Terraform linting, validation, and security scans
-
-Production-ready – Based on industry best practices
-
-📖 Usage
-
-1️⃣ **Define the Configuration in **terraform.tfvars
-
+```hcl
 aws_region = "us-east-1"
 
 compute_config = {
@@ -61,93 +64,6 @@ dynamodb_config = {
   write_capacity     = 5
 }
 
-2️⃣ Deploy the Infrastructure
-
-git clone https://github.com/your-org/terraform-3tier.git
-cd terraform-3tier
-
-terraform init -upgrade
-terraform apply -var-file="terraform.tfvars"
-
-3️⃣ Destroy the Infrastructure
-
-terraform destroy -var-file="terraform.tfvars"
-
-📜 Inputs & Outputs
-
-🔹 Inputs
-
-Name
-
-Type
-
-Description
-
-compute_config
-
-object
-
-Configuration for compute resources
-
-network_config
-
-object
-
-Configuration for networking resources
-
-dynamodb_config
-
-object
-
-Configuration for DynamoDB database
-
-🔹 Outputs
-
-Name
-
-Description
-
-compute_asg_name
-
-Name of the Auto Scaling Group
-
-compute_lb_arn
-
-ARN of the Load Balancer
-
-network_vpc_id
-
-ID of the created VPC
-
-dynamodb_table_name
-
-Name of the DynamoDB table
-
-dynamodb_table_arn
-
-ARN of the DynamoDB table
-
-🛠️ Development & Contributing
-
-🔹 Pre-Commit Hooks
-
-This repository enforces Terraform best practices via pre-commit hooks.
-To install:
-
-pre-commit install
-pre-commit run --all-files
-
-🔹 Running Tests with Terratest
-
-go test -v test/
-
-📝 License
-
-This project is licensed under the MIT License. See LICENSE for details.
-
-🙌 Contributing
-
-We welcome contributions! Please follow the guidelines in CONTRIBUTING.md.
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
