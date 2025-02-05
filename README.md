@@ -8,7 +8,19 @@ This Terraform module sets up a **highly modular, best-practices** 3-tier archit
 
 🚨 Disclaimer: Work In Progress 🚨
 
-🛑 This module is unfinished due to time constraints. To ensure compliance with Checkov security policies, several values were hardcoded instead of making them fully configurable. Some areas may require manual intervention or further improvements for production readiness.
+🛑 This module is unfinished due to time constraints. To ensure compliance with Checkov security policies, several values were hardcoded instead of making them fully configurable. Some areas may require manual intervention or further improvements for production readiness. It was also developed as part of an interview assignment, where the requirements were minimal. To demonstrate a professional and production-ready environment, I approached a fully modular 3-tier architecture. However, I acknowledge that additional modules are needed for a complete enterprise-grade setup, including but not limited to:
+
+Tagging Module – Ensures all resources are consistently tagged for cost management and compliance.
+
+KMS Encryption Module – Enables encryption at rest for databases, storage, and other sensitive AWS resources.
+
+Logging & Monitoring Module – Implements AWS CloudWatch, CloudTrail, and centralized logging.
+
+Backup & Recovery Module – Ensures DynamoDB PITR, S3 versioning, and automated snapshot policies.
+
+Network Security Module – Configures NACLs, private subnets, and network firewalls.
+
+Identity & Access Management Module – Implements granular IAM policies and role-based access controls.
 
 ---
 
