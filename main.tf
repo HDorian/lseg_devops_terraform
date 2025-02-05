@@ -1,6 +1,7 @@
 module "compute" {
-  source         = "./modules/compute"
-  compute_config = var.compute_config
+  source            = "./modules/compute"
+  compute_config    = var.compute_config
+  allow_https_sg_id = module.network.allow_https_sg_id
 }
 
 module "network" {

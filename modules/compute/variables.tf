@@ -19,3 +19,7 @@ variable "compute_config" {
     lb_type           = string
   })
 }
+
+variable "allow_https_sg_id" {
+  type = string
+}

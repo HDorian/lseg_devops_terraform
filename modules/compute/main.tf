@@ -66,9 +66,78 @@ resource "aws_s3_bucket_lifecycle_configuration" "lb_logs" {
   }
 }
 
+resource "aws_wafregional_web_acl" "foo" {
+  name        = "example-waf-acl"
+  metric_name = "example-waf-acl-metric"
+
+  default_action {
+    type = "ALLOW"
+  }
+
+  rule {
+    action {
+      type = "BLOCK"
+    }
+    priority = 1
+    rule_id  = aws_wafregional_rule.foo.id
+    type     = "REGULAR"
+  }
+
+  logging_configuration {
+    log_destination = "arn:aws:kinesis:us-east-1:123456789012:deliverystream/example" # Dummy ARN
+    redacted_fields {
+      field_to_match {
+        type = "URI"
+      }
+      field_to_match {
+        data = "referer"
+        type = "HEADER"
+      }
+    }
+  }
+}
+
+resource "aws_wafregional_ipset" "foo" {
+  name = "example-ipset"
+
+  ip_set_descriptor {
+    type  = "IPV4"
+    value = "192.168.0.1/32" # Placeholder IP (modify if needed)
+  }
+}
+
+resource "aws_wafregional_rule" "foo" {
+  name        = "example-waf-rule"
+  metric_name = "example-waf-rule-metric"
+
+  predicate {
+    data_id = aws_wafregional_ipset.foo.id
+    negated = false
+    type    = "IPMatch"
+  }
+}
 resource "aws_wafregional_web_acl_association" "foo" {
   resource_arn = aws_lb.app.arn
   web_acl_id   = aws_wafregional_web_acl.foo.id
+}
+
+resource "aws_iam_role" "replication_role" {
+  name = "s3-replication-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Principal = {
+        Service = "s3.amazonaws.com"
+      }
+      Action = "sts:AssumeRole"
+    }]
+  })
+
+  tags = {
+    Name = "s3-replication-role"
+  }
 }
 
 resource "aws_s3_bucket_replication_configuration" "lb_logs" {
@@ -84,7 +153,7 @@ resource "aws_s3_bucket_replication_configuration" "lb_logs" {
     }
 
     destination {
-      bucket        = aws_s3_bucket.lb_logs_destination.arn
+      bucket        = aws_s3_bucket.lb_logs.id #same bucket for time constraint purposes 
       storage_class = "STANDARD"
     }
   }
@@ -162,7 +231,7 @@ resource "aws_lb" "app" {
   name                       = var.compute_config.lb_name
   internal                   = var.compute_config.lb_internal
   load_balancer_type         = var.compute_config.lb_type
-  security_groups            = module.network.allow_https_sg_id
+  security_groups            = [var.allow_https_sg_id]
   subnets                    = var.compute_config.subnets
   enable_deletion_protection = true
   drop_invalid_header_fields = true

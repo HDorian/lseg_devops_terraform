@@ -6,13 +6,17 @@ This Terraform module sets up a **highly modular, best-practices** 3-tier archit
 - **Network Layer** (VPC, Subnets, Security Groups)
 - **Database Layer** (DynamoDB with best-practices configurations)
 
+🚨 Disclaimer: Work In Progress 🚨
+
+🛑 This module is unfinished due to time constraints. To ensure compliance with Checkov security policies, several values were hardcoded instead of making them fully configurable. Some areas may require manual intervention or further improvements for production readiness.
+
 ---
 
 ## 📌 Features
 ✅ **Full modularity** – Separate modules for compute, networking, and database  
 ✅ **Security-first approach** – Uses best practices for IAM, networking, and encryption  
 ✅ **Highly configurable** – All values managed via `terraform.tfvars`  
-✅ **Pre-commit hooks** – Enforces Terraform linting, validation, and security scans  
+✅ **Pre-commit hooks** – Enforces Terraform linting, validation, fmt and security scans  
 ✅ **Production-ready** – Based on industry best practices  
 ✅ **Checkov Security Compliance** – Implements security policies recommended by Checkov  
 ✅ **VPC Flow Logs & S3 Logging** – Ensures network visibility and compliance  

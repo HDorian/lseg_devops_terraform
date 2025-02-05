@@ -22,6 +22,7 @@ No modules.
 The following resources are used by this module:
 
 - [aws_autoscaling_group.app](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group) (resource)
+- [aws_iam_role.replication_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) (resource)
 - [aws_launch_template.app](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_template) (resource)
 - [aws_lb.app](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb) (resource)
 - [aws_lb_listener.http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) (resource)
@@ -35,11 +36,20 @@ The following resources are used by this module:
 - [aws_s3_bucket_server_side_encryption_configuration.good_sse_1](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_server_side_encryption_configuration) (resource)
 - [aws_s3_bucket_versioning.example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_versioning) (resource)
 - [aws_sns_topic.bucket_notifications](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic) (resource)
+- [aws_wafregional_ipset.foo](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/wafregional_ipset) (resource)
+- [aws_wafregional_rule.foo](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/wafregional_rule) (resource)
+- [aws_wafregional_web_acl.foo](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/wafregional_web_acl) (resource)
 - [aws_wafregional_web_acl_association.foo](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/wafregional_web_acl_association) (resource)
 
 ## Required Inputs
 
 The following input variables are required:
+
+### <a name="input_allow_https_sg_id"></a> [allow\_https\_sg\_id](#input\_allow\_https\_sg\_id)
+
+Description: n/a
+
+Type: `string`
 
 ### <a name="input_compute_config"></a> [compute\_config](#input\_compute\_config)
 
