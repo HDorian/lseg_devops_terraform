@@ -17,12 +17,10 @@ This Terraform module sets up a **highly modular, best-practices** 3-tier archit
 ✅ **Security-first approach** – Uses best practices for IAM, networking, and encryption  
 ✅ **Highly configurable** – All values managed via `terraform.tfvars`  
 ✅ **Pre-commit hooks** – Enforces Terraform linting, validation, fmt and security scans  
-✅ **Production-ready** – Based on industry best practices  
 ✅ **Checkov Security Compliance** – Implements security policies recommended by Checkov  
 ✅ **VPC Flow Logs & S3 Logging** – Ensures network visibility and compliance  
 ✅ **Cross-Region S3 Replication** – Secure replication for resilience  
 ✅ **Attached Security Groups** – Dummy resources ensure all security groups are attached  
-✅ **Checkov Skips for Registry Modules** – Implements proper skips for registry module constraints  
 
 ---
 
@@ -130,7 +128,10 @@ go test -v ./test/
 
 ## 📜 Security & Compliance
 This module follows best security practices:
-✅ **Checkov Scans:** Implements AWS security policies  
+✅ **Checkov Scans:** Ensures security configurations align with industry standards.
+✅ **TFlint Scan:** Validates Terraform code against known AWS misconfigurations.
+✅ **Terraform fmt:** Automatically reformats Terraform files to follow standardized syntax. 
+✅ **Terraform Docs:** Automatically updates README.md with module inputs, outputs, and usage details.
 ✅ **VPC Flow Logging:** Ensures visibility into network traffic  
 ✅ **IAM Best Practices:** Ensures least privilege permissions  
 ✅ **S3 Bucket Hardening:** Enforces encryption and access control  
